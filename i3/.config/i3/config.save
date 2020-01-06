@@ -179,7 +179,6 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 exec_always --no-startup-id $(killall -q polybar;for m in $(polybar --list-monitors | cut -d":" -f1); do MONITOR=$m polybar -r default & done)
 exec_always --no-startup-id nm-applet
-exec --no-startup-id flameshot
 exec --no-startup-id variety
 exec_always --no-startup-id "setxkbmap de"
 exec --no-startup-id thunderbird
@@ -187,6 +186,7 @@ exec --no-startup-id rambox
 exec --no-startup-id firefox
 exec --no-startup-id "picom -b"
 #exec --no-startup-id ~/.screenlayout/home.sh
+exec --no-startup-id "chronyc
 
 #exec --no-startup-id redshift -v
 

@@ -72,6 +72,8 @@ source $ZSH/oh-my-zsh.sh
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
+# export PATH="/home/martin/.local/bin"
+
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
@@ -111,7 +113,7 @@ alias hostmux='/home/martin/hostmux/hostmux'
 alias pocoweb='/home/martin/hostmux/hostmux -f /home/martin/pocoweb.txt'
 alias update='sudo apt-get update && sudo apt-get upgrade -y'
 
-export PATH="/home/martin/anaconda3/bin:$PATH"
+export PATH="/home/martin/.gem/ruby/2.7.0/bin:$PATH"
 
 mp3 () {
 	youtube-dl --ignore-errors -f bestaudio --extract-audio --audio-format mp3 --audio-quality 0 -o '~/Musik/youtube/%(title)s.%(ext)s' "$1"
@@ -127,3 +129,6 @@ mp3p () {
 if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
         source /etc/profile.d/vte.sh
 fi
+[ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh
+
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

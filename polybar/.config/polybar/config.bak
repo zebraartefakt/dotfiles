@@ -131,7 +131,7 @@ font-4 = "Font Awesome 5 Brands:pixelsize=8;1"
 
 modules-left = i3 xwindow
 modules-center =
-modules-right = arrow1 vpn wireless-network arrow2 memory2 arrow3 uptime arrow4 volume arrow5 battery arrow6 date arrow7
+modules-right = arrow1 vpn wireless-network wired-network arrow2 memory2 arrow3 weather arrow4 volume arrow5 date arrow7 arbeitsplan arrow8 
 
 separator =
 
@@ -401,7 +401,8 @@ content-background = #E5C07B
 type = custom/text
 content = "%{T2} %{T-}"
 content-font = 2
-content-foreground = #C678DD
+; content-foreground = #61AFEF
+content-foreground = #56B6C2
 content-background = #61AFEF
 
 [module/arrow6]
@@ -417,9 +418,16 @@ content-background = #C678DD
 type = custom/text
 content = "%{T2} %{T-}"
 content-font = 2
-content-foreground = #282C34
+content-foreground = #ffffcc
 content-background = #56B6C2
 
+[module/arrow8]
+; cyan to grey
+type = custom/text
+content = "%{T2} %{T-}"
+content-font = 2
+content-foreground = #282C34
+content-background = #ffffcc
 
 ################################################################################
 ###############################################################################
@@ -1015,12 +1023,15 @@ format-background = ${colors.background}
 type = custom/script
 exec = ~/.config/polybar/scripts/pub-ip.sh
 interval = 100
+;format-foreground = ${colors.foreground}
+;format-background = ${colors.background}
+
 format-foreground = ${colors.foreground}
 format-background = ${colors.background}
-format-underline = #FFBB00
+format-prefix-foreground = #62FF00
+format-underline = #62FF00
 label = %output%
 format-prefix = "  "
-format-prefix-foreground = #FFBB00
 
 
 ################################################################################
@@ -1083,7 +1094,7 @@ thermal-zone = 0
 ; $ for i in /sys/class/hwmon/hwmon*/temp*_input; do echo "$(<$(dirname $i)/name): $(cat ${i%_*}_label 2>/dev/null || echo $(basename ${i%_*})) $(readlink -f $i)"; done
 ; to find path to desired file
 ; Default reverts to thermal zone setting
-hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon1/temp1_input
+hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon4/temp1_input
 
 warn-temperature = 70
 format = <ramp> <label>
@@ -1232,23 +1243,29 @@ ramp-volume-1 = 
 
 [module/weather]
 type = custom/script
-interval = 10
+interval = 600
 format = <label>
 format-prefix = " "
-format-prefix-foreground = #98C379
-format-underline = #98C379
-format-foreground = ${colors.foreground}
-format-background = ${colors.background}
-exec = python -u ~/.config/polybar/scripts/weather.py
-tail = true
-
+;format-prefix-foreground = #98C379
+;format-prefix-foreground = #282C34
+;format-underline = #98C379
+;format-foreground = ${colors.foreground}
+;format-background = ${colors.background}
+exec = ~/.config/polybar/scripts/weather
+exec-if = ping openweathermap.org -c 1
+;label-font = 3
+;font-2 = Weather 
+;Icons:size=12;0
+;tail = true
+format-foreground = #000000
+format-background = #E5C07B
 
 #################################################################################
 
 [module/wired-network]
 ;https://github.com/jaagr/polybar/wiki/Module:-network
 type = internal/network
-interface = enp9s0u1u2
+interface = enp3s0f1
 ;interface = enp14s0
 interval = 3.0
 
@@ -1285,7 +1302,7 @@ label-disconnected-foreground = #282C34
 [module/wireless-network]
 ;https://github.com/jaagr/polybar/wiki/Module:-network
 type = internal/network
-interface = wlp58s0
+interface = wlp4s0
 interval = 3.0
 label-connected = %essid%
 
@@ -1386,6 +1403,20 @@ format-background = ${colors.background}
 
 
 ###############################################################################
+[module/arbeitsplan]
+type = custom/script
+exec = "python /home/martin/arbeitsplan.py /home/martin/Documents/k001_arbeitsplan_provid.xlsx ME"
+interval = 300
+; format-underline = #ffffcc
+; format-background = #ffffcc
+format-prefix-foreground = #282C34
+format-foreground = #282C34
+format-background = #ffffcc
+format-prefix = "  "
+; format-prefix-foreground = #282C34
+
+###############################################################################
+
 [module/vpn]
 type = custom/script
 exec = "echo 'vpn '"

@@ -1,0 +1,1 @@
+zsh polybar stow git firefox ttf-font-awesome screen nerd-fonts-ubuntu-mono ttf-agave gcc tilix fakeroot clipit
